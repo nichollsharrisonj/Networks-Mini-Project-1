@@ -2,14 +2,12 @@ from socket import *
 import sys
 # IP address
 
-try:
-	serverName = sys.argv[1]
-	print(serverName)
-except:
-	print("Expected IP, port, and path")
+
+serverName = str(input("Enter IP: "))
 # Port number to use
-serverPort = 12000
+serverPort = int(input("Enter port: "))
 print("set serverport")
+path = str(input("Enter path: "))
 # Create socket for TCP
 clientSocket = socket(AF_INET, SOCK_STREAM)
 print("set clientsocket")
@@ -18,12 +16,15 @@ clientSocket.connect((serverName, serverPort))
 print("connected")
 # Ask user for a sentence to echo
 path = '/test.html'
-getrequest = f'GET {path} HTTP/1.1\r\n'
+getrequest = f'GET {path} HTTP/1.1\r\nHost:{serverName}:{serverPort}\r\n\r\n'
 # sentence = input('Input a sentence in lowercase:')
 # Send user input sentence
 clientSocket.send(getrequest.encode())
 # Receive response from server via our socket
 page = clientSocket.recv(1024)
+# Your code starts here # Your code ends here
+filename = page.split()
+print(filename)
 # Display
 print('Message from server: ', page.decode())
 clientSocket.close()
@@ -34,3 +35,4 @@ clientSocket.close()
 # (b) connect to the server using a TCP connection,
 # (c) send an HTTP request with GET method to the server,
 # (d) display server response message as output.
+

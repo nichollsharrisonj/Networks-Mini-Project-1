@@ -17,7 +17,7 @@ while True:
     connectionSocket, addr = serverSocket.accept() # Your code starts here # Your code ends here
     print("accepted")
     try:
-        message = connectionSocket.recv(1024).decode()# Your code starts here # Your code ends here
+        message = connectionSocket.recv(1024)# Your code starts here # Your code ends here
         filename = message.split()[1]
         f = open(filename[1:])
 
@@ -40,7 +40,7 @@ while True:
         connectionSocket.send("\r\n".encode())
 
         connectionSocket.close()
-        time.sleep(3000)
+        print("done")
 
     except IOError as e:
         print(e)
@@ -48,6 +48,7 @@ while True:
         htmlstring = "<html><h1></h1><body>404 not found</body></html>"
         err = "HTTP/1.0 404 Not Found\r\n\r\n" + htmlstring
         connectionSocket.send(err.encode())
+
 
         # Send 404 message
         # Your code starts here
@@ -58,4 +59,4 @@ while True:
         # Your code starts here
 
         # Your code ends here
-serverSocket.close()
+#serverSocket.close()
