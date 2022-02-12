@@ -3,10 +3,13 @@ from socket import *
 import time
 # Prepare server socket
 # SOCK_STREAM for TCP, SOCK_DGRAM for UDP
+ipaddress = gethostbyname(gethostname())
+
+
 serverSocket = socket(AF_INET, SOCK_STREAM)
 # Your code starts here
 serverPort = 12000
-serverSocket.bind((gethostname(), serverPort))
+serverSocket.bind((ipaddress, serverPort))
 # serverSocket.bind(('174.204.205.50',serverPort))
 serverSocket.listen(1)
 print('Server is ready to receive')
@@ -29,14 +32,17 @@ while True:
         # outputdata = prepend + outputdata
         # Send one HTTP header line to socket
         # Your code starts here
-        connectionSocket.send(header.encode())
+        # connectionSocket.send(header.encode())
 
 
         # Your code ends here
 
         #Send object to client
-        for i in range(0, len(outputdata)):
-            connectionSocket.send(outputdata[i].encode())
+        connectionSocket.sendall(header.encode() + outputdata.encode())
+        # for i in range(0, len(outputdata)):
+        #     connectionSocket.send(outputdata[i].encode())
+        #     print("looping")
+        # print("DONE looping")
         connectionSocket.send("\r\n".encode())
 
         connectionSocket.close()
@@ -49,7 +55,7 @@ while True:
         err = "HTTP/1.0 404 Not Found\r\n\r\n" + htmlstring
         connectionSocket.send(err.encode())
 
-
+        connectionSocket.close()
         # Send 404 message
         # Your code starts here
 
@@ -59,4 +65,4 @@ while True:
         # Your code starts here
 
         # Your code ends here
-#serverSocket.close()
+serverSocket.close()

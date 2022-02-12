@@ -4,10 +4,14 @@ import random
 # Import socket module
 from socket import *
 
+#set ip
+serverIp = gethostbyname(gethostname())
 # SOCK_STREAM for TCP, SOCK_DGRAM for UDP
 serverSocket = socket(AF_INET, SOCK_DGRAM)
+print("made socket")
 # Assign IP address and port number to socket
-serverSocket.bind(('', 12000))
+serverSocket.bind((serverIp, 12000))
+print("bound socket")
 
 while True:
     # Receive client packet and arrival address
