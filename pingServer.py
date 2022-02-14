@@ -5,33 +5,30 @@ import random
 from socket import *
 
 
-#randomly set the chance of failing
+#randomly set the chance of failing before running the server
 failChance = random.random()
 
-#set ip
-serverIp = gethostbyname(gethostname())
+
+serverIp = gethostbyname(gethostname()) #set ip
 print(f"ip is: {serverIp}")
-# SOCK_STREAM for TCP, SOCK_DGRAM for UDP
-serverSocket = socket(AF_INET, SOCK_DGRAM)
+
+serverSocket = socket(AF_INET, SOCK_DGRAM) # SOCK_STREAM for TCP, SOCK_DGRAM for UDP
 print("made socket")
-# Assign IP address and port number to socket
-serverSocket.bind((serverIp, 12000))
+
+serverSocket.bind((serverIp, 12000)) # Assign IP address and port number to socket
 print("bound socket")
 
 while True:
-    # Receive client packet and arrival address
-    message, address = serverSocket.recvfrom(1024)
 
-    # Capitalize the message
-    message = message.decode().upper()
-    print(message)
-    # Error simulator goes here
-    # Your code starts here
-    if random.random() < failChance:
+    message, address = serverSocket.recvfrom(1024) #Receive client packet and arrival address
+
+    
+    message = message.decode().upper() #Capitalize the message, to simulate a ping going through
+
+    if random.random() < failChance: #Decide at random, with probability decided earlier, whether or not to return packeg
         serverSocket.sendto(message.encode(), address)
     else:
-        serverSocket.sendto(''.encode(),address)
-    # Your code ends here
-    # If no error, server responds
+        serverSocket.sendto(''.encode(),address) #To simulate a ping not being returned, send an empty string.
+
     
 

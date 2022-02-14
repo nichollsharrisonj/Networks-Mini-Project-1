@@ -2,7 +2,7 @@
 from socket import *
 import time
 
-serverName = '134.10.73.65'#gethostbyname(gethostname())
+serverName = gethostbyname(gethostname())
 serverPort = 12000
 
 # create socket
@@ -14,25 +14,25 @@ numReceived = 0
 numPings = 10
 totalTime = 0
 for i in range(numPings):
-	# Use socket to send message, note the use of encode() and the address
-	start = time.time()
+	start = time.time() #log start time
 
-	clientSocket.sendto(message.encode(), (serverName, serverPort))
-	# Receiving follows similar format, 2048 is buffer size for input
-	receivedMessage, serverAddress = clientSocket.recvfrom(1024)
+	clientSocket.sendto(message.encode(), (serverName, serverPort)) #send message
 
-	pingTime = time.time() - start
+	receivedMessage, serverAddress = clientSocket.recvfrom(1024) #receive message
+
+	pingTime = time.time() - start #calculate time taken
 
 	decoded = receivedMessage.decode()
+
 	if decoded == '': #received an empty string, which my server sends to simulate not returning a ping
 		print("*\n") 
 	else:
-		print(f'Received message: {decoded}')
+		print(f'Received message: {decoded}') #received an actual ping
 		print(f'RTT: {pingTime}\n')
 		numReceived += 1
 		totalTime += pingTime
 
-print(f'Packet loss rate: {(numPings-numReceived)/numPings}')
+print(f'Packet loss rate: {(numPings-numReceived)/numPings}') #report data
 print(f'Average RTT for returned packets: {totalTime/numReceived} seconds')
 clientSocket.close()
 

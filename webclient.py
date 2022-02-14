@@ -3,32 +3,21 @@ import sys
 # IP address
 
 
-serverName = str(input("Enter IP: "))
-# Port number to use
-serverPort = int(input("Enter port: "))
-path = str(input("Enter path: "))
-# Create socket for TCP
-clientSocket = socket(AF_INET, SOCK_STREAM)
-# Connect via our socket and port number to the IP
-clientSocket.connect((serverName, serverPort))
-# Ask user for a sentence to echo
-getrequest = f'GET /{path} HTTP/1.1\r\nHost:{serverName}:{serverPort}\r\n\r\n'
-# sentence = input('Input a sentence in lowercase:')
-# Send user input sentence
-clientSocket.send(getrequest.encode())
-# Receive response from server via our socket
-page = clientSocket.recv(1024).decode()
-# Your code starts here # Your code ends here
+serverName = str(input("Enter IP: ")) #Get IP from user
+serverPort = int(input("Enter port: ")) #Get port number from user
+path = str(input("Enter path: ")) #Get path of desired file from user
 
-# Display
-print('\nMessage from server: \n\n' + page)
+clientSocket = socket(AF_INET, SOCK_STREAM) #create socket for TCP
+clientSocket.connect((serverName, serverPort)) #connect using socket and port number to the provided IP
 
-clientSocket.close()
+getrequest = f'GET /{path} HTTP/1.1\r\nHost:{serverName}:{serverPort}\r\n\r\n' #Make getrequest string with proper http formatting
+
+clientSocket.send(getrequest.encode()) #Send encoded version of getrequest
+page = clientSocket.recv(1024).decode() # Receive response from server via our socket
+
+print('\nMessage from server: \n\n' + page) #Display the message
+
+clientSocket.close() #Close connection
 
 
-# Create a super simple web client to go with your server. Your client should
-# (a) take as input the server IP address, port at which the server listens, and object (with path) stored on the server
-# (b) connect to the server using a TCP connection,
-# (c) send an HTTP request with GET method to the server,
-# (d) display server response message as output.
 
