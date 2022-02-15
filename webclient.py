@@ -3,9 +3,9 @@ import sys
 # IP address
 
 
-serverName = str(input("Enter IP: ")) #Get IP from user
+serverName = input("Enter IP: ") #Get IP from user
 serverPort = int(input("Enter port: ")) #Get port number from user
-path = str(input("Enter path: ")) #Get path of desired file from user
+path = input("Enter path: ") #Get path of desired file from user
 
 clientSocket = socket(AF_INET, SOCK_STREAM) #create socket for TCP
 clientSocket.connect((serverName, serverPort)) #connect using socket and port number to the provided IP

@@ -3,7 +3,7 @@
 import random
 # Import socket module
 from socket import *
-
+import time
 
 #randomly set the chance of failing before running the server
 failChance = random.random()
@@ -28,7 +28,8 @@ while True:
     if random.random() < failChance: #Decide at random, with probability decided earlier, whether or not to return packeg
         serverSocket.sendto(message.encode(), address)
     else:
-        serverSocket.sendto(''.encode(),address) #To simulate a ping not being returned, send an empty string.
+        time.sleep(1)
+        # serverSocket.sendto(''.encode(),address) #To simulate a ping not being returned, send an empty string.
 
     
 
