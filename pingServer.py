@@ -6,7 +6,7 @@ from socket import *
 import time
 
 #randomly set the chance of failing before running the server
-failChance = random.random()
+failChance = .5
 
 
 serverIp = gethostbyname(gethostname()) #set ip

@@ -5,10 +5,10 @@ import time
 serverName = gethostbyname(gethostname()) #get ip
 serverPort = 12000
 
-# create socket
-clientSocket = socket(AF_INET, SOCK_DGRAM)
-# Ask user for a sentence of input
-message = input('Input a sentence in lowercase:')
+
+clientSocket = socket(AF_INET, SOCK_DGRAM) #create socket
+
+message = input('Input a sentence in lowercase: ') #Ask user for sentence, the server will try to convert this to uppercase and send it back
 
 numReceived = 0
 numPings = 10
@@ -30,7 +30,7 @@ for i in range(numPings):
 		print(f'RTT: {pingTime}\n')
 		numReceived += 1
 		totalTime += pingTime
-		
+
 	except timeout: #Timed out, print * symbol and go on to next ping
 		print('*')
 
